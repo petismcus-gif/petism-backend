@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { router: supplierRouter } = require("./supplier-adapters");
+const { router: dbRouter } = require("./db-routes");
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 // NOTE: supplier-adapters.js expects req.order to already be loaded by
 // middleware — wire that up once the Supabase client is in place.
 app.use("/", supplierRouter);
+app.use("/", dbRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
